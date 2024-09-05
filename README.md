@@ -35,6 +35,13 @@ The forwarder is a component of Splunk responsible for collecting and forwarding
 
 ## Key Concepts
 
+<img width="960" alt="general" src="https://github.com/user-attachments/assets/f66756ee-fe05-469b-a902-b51fc1519f1a">
+
+
+
+
+
+
 1. **Key-Value Pairs**: Represent structured data in events and are formatted as `<key>=<value>`.
 2. **Wildcard Value**: In Splunk, the asterisk (`*`) character is used as a wildcard to match unlimited values.
 3. **Events, Patterns, Stats, Visuals**: 
@@ -48,12 +55,19 @@ The forwarder is a component of Splunk responsible for collecting and forwarding
    - **Relative Time Range**: Dependent on when the search is run. For example, a relative time range of `-60m` means 60 minutes ago. If the current time is 3 P.M., the search will cover the past 60 minutes.
 
 ## Running Basic Searches
+**Example**:
+- The value is not case-sensitive. Therefore, `sourcetype=LiNux_SECUre` and `sourcetype=linux_secure` would be the same
+  
+<img width="942" alt="general2incase" src="https://github.com/user-attachments/assets/8172e486-8a19-46d1-8aca-2bac8cb805bd">
 
 In Splunk, key-value pairs are used to represent structured data in the events being indexed. Each key-value pair is separated by an equal sign (`=`), and each pair is separated by a space or a comma. 
 
 **Example**:
 - In a log event, the key could be `sourcetype` and the value could be `linux_secure`, represented as `sourcetype=linux_secure` in Splunk.
-- The key is case-sensitive (e.g., `Sourcetype` and `Host` are not the same as `sourcetype` and `host`, so no value would be returned if mismatched).
+- The key is case-sensitive (e.g., `Sourcetype` and `Host` are not the same as `sourcetype` and `host`, so no value would be returned if mismatched). 
+
+<img width="946" alt="casesentigeneral" src="https://github.com/user-attachments/assets/32838089-0a08-4916-844c-f55bbbe23cf6">
+
 
 ## Saving Searches
 
