@@ -30,8 +30,11 @@ The forwarder is a component of Splunk responsible for collecting and forwarding
 ## Field Removal
 
 
-- `<field>`: Removes all of the fields.
+- `-<field>`: Removes all of the fields.
+<img width="955" alt="1" src="https://github.com/user-attachments/assets/65199e63-c554-4199-8409-6cb9f37e65df">
+
 - `- <field>`: Removes a particular field.
+<img width="954" alt="2" src="https://github.com/user-attachments/assets/e2e6cda2-9714-481b-9e52-db4b2170fba1">
 
 ## Key Concepts
 
