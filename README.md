@@ -125,3 +125,145 @@ left with a smaller final results table
 It involves chaining together multiple commands using the pipe symbol (|) to pass
 the results from one command to the next.
 
+# Common Search Commands
+
+| Command       | Description                                                    |
+|---------------|----------------------------------------------------------------|
+| `chart/ timechart` | Returns results in a tabular output for (time-series) charting. |
+| `dedup`       | Removes subsequent results that match a specified criterion.  |
+| `eval`        | Calculates an expression. See [COMMON EVAL FUNCTIONS](#common-eval-functions). |
+| `fields`      | Removes fields from search results.                           |
+| `head/tail`   | Returns the first/last N results.                             |
+| `lookup`      | Adds field values from an external source.                    |
+| `rename`      | Renames a field. Use wildcards to specify multiple fields.    |
+| `rex`         | Specifies regular expression named groups to extract fields. |
+| `search`      | Filters results to those that match the search expression.    |
+| `sort`        | Sorts the search results by the specified fields.             |
+| `stats`       | Provides statistics, grouped optionally by fields. See [COMMON STATS FUNCTIONS](#common-stats-functions). |
+| `mstats`      | Similar to stats but used on metrics instead of events.        |
+| `table`       | Specifies fields to keep in the result set. Retains data in tabular format. |
+| `top/rare`    | Displays the most/least common values of a field.              |
+| `transaction` | Groups search results into transactions.                      |
+| `where`       | Filters search results using eval expressions. Used to compare two different fields. |
+
+## Common Eval Functions
+
+The `eval` command calculates an expression and puts the resulting value into a field (e.g., `...| eval force = mass * acceleration`). The following table lists some of the functions used with the `eval` command. You can also use basic arithmetic operators (`+ - * / %`), string concatenation (e.g., `...| eval name = last . "," . first`), and Boolean operations (`AND OR NOT XOR < > <= >= != = == LIKE`).
+
+| Function             | Description                                                       | Examples                                              |
+|----------------------|-------------------------------------------------------------------|-------------------------------------------------------|
+| `abs(X)`             | Returns the absolute value of X.                                 | `abs(number)`                                        |
+| `case(X,"Y",…)`      | Takes pairs of arguments X and Y, where X arguments are Boolean expressions. When evaluated to TRUE, the arguments return the corresponding Y argument. | `case(error == 404, "Not found", error == 500, "Internal Server Error", error == 200, "OK")` |
+| `ceil(X)`            | Ceiling of a number X.                                           | `ceil(1.9)`                                          |
+| `cidrmatch("X",Y)`   | Identifies IP addresses that belong to a particular subnet.      | `cidrmatch("123.132.32.0/25",ip)`                    |
+| `coalesce(X,…)`      | Returns the first value that is not null.                        | `coalesce(null(), "Returned val", null())`           |
+| `cos(X)`             | Calculates the cosine of X.                                      | `n=cos(0)`                                           |
+| `exact(X)`           | Evaluates an expression X using double precision floating point arithmetic. | `exact(3.14*num)`                                    |
+| `exp(X)`             | Returns e^X.                                                      | `exp(3)`                                             |
+| `if(X,Y,Z)`          | If X evaluates to TRUE, the result is the second argument Y. If X evaluates to FALSE, the result evaluates to the third argument Z. | `if(error==200, "OK", "Error")`                      |
+| `in(field,valuelist)`| Returns TRUE if a value in "value-list" matches a value in "field". You must use the “in” function inside the “if” function. | `if(in(status, “404”,”500”,”503”),”true”,”false”)` |
+| `isbool(X)`          | Returns TRUE if X is Boolean.                                    | `isbool(field)`                                      |
+| `isint(X)`           | Returns TRUE if X is an integer.                                 | `isint(field)`                                       |
+| `isnull(X)`          | Returns TRUE if X is NULL.                                      | `isnull(field)`                                      |
+| `isstr()`            | Returns TRUE if X is a string.                                   | `isstr(field)`                                       |
+| `len(X)`             | This function returns the character length of a string X.        | `len(field)`                                         |
+| `like(X,"Y")`        | Returns TRUE if and only if X is like the SQLite pattern in Y.   | `like(field, "addr%")`                               |
+| `log(X,Y)`           | Returns the log of the first argument X using the second argument Y as the base. Y defaults to 10. | `log(number,2)`                                      |
+| `lower(X)`           | Returns the lowercase of X.                                      | `lower(username)`                                    |
+| `ltrim(X,Y)`         | Returns X with the characters in Y trimmed from the left side. Y defaults to spaces and tabs. | `ltrim(" ZZZabcZZ ", " Z")`                          |
+| `match(X,Y)`         | Returns if X matches the regex pattern Y.                        | `match(field, "^\d{1,3}\.\d$")`                      |
+| `max(X,…)`           | Returns the maximum.                                             | `max(delay, mydelay)`                                |
+| `md5(X)`             | Returns the MD5 hash of a string value X.                        | `md5(field)`                                         |
+| `min(X,…)`           | Returns the minimum.                                             | `min(delay, mydelay)`                                |
+| `mvcount(X)`         | Returns the number of values of X.                               | `mvcount(multifield)`                                |
+| `mvfilter(X)`        | Filters a multi-valued field based on the Boolean expression X.  | `mvfilter(match(email, "net$"))`                     |
+| `mvindex(X,Y,Z)`     | Returns a subset of the multivalued field X from start position (zero-based) Y to Z (optional). | `mvindex(multifield, 2)`                              |
+| `mvjoin(X,Y)`        | Given a multi-valued field X and string delimiter Y, and joins the individual values of X using Y. | `mvjoin(address, ";")`                               |
+| `now()`              | Returns the current time, represented in Unix time.              | `now()`                                              |
+| `null()`             | This function takes no arguments and returns NULL.               | `null()`                                             |
+| `nullif(X,Y)`        | Given two arguments, fields X and Y, and returns the X if the arguments are different. Otherwise returns NULL. | `nullif(fieldA, fieldB)`                              |
+| `random()`           | Returns a pseudo-random number ranging from 0 to 2147483647.     | `random()`                                           |
+| `relative_time(X,Y)` | Given epochtime time X and relative time specifier Y, returns the epochtime value of Y applied to X. | `relative_time(now(),"-1d@d")`                        |
+| `replace(X,Y,Z)`     | Returns a string formed by substituting string Z for every occurrence of regex string Y in string X. | `replace(date,"^(\d{1,2})/(\d{1,2})/", "\2/\1/")`  |
+| `round(X,Y)`         | Returns X rounded to the amount of decimal places specified by Y. The default is to round to an integer. | `round(3.5)`                                         |
+| `rtrim(X,Y)`         | Returns X with the characters in Y trimmed from the right side. If Y is not specified, spaces and tabs are trimmed. | `rtrim(" ZZZZabcZZ ", " Z")`                         |
+| `split(X,Y)`         | Returns X as a multi-valued field, split by delimiter Y.          | `split(address, ";")`                                |
+| `sqrt(X)`            | Returns the square root of X.                                   | `sqrt(9)`                                            |
+| `strftime(X,Y)`      | Returns epochtime value X rendered using the format specified by Y. | `strftime(_time, "%H:%M")`                           |
+| `strptime(X,Y)`      | Given a time represented by a string X, returns value parsed from format Y. | `strptime(timeStr, "%H:%M")`                         |
+| `substr(X,Y,Z)`      | Returns a substring field X from start position (1-based) Y for Z (optional) characters. | `substr("string", 1, 3)`                             |
+| `time()`             | Returns the wall-clock time with microsecond resolution.         | `time()`                                             |
+| `tonumber(X,Y)`      | Converts input string X to a number, where Y (optional, defaults to 10) defines the base of the number to convert to. | `tonumber("0A4",16)`                                 |
+| `tostring(X,Y)`      | Returns a field value of X as a string. If the value of X is a number, it reformats it as a string. If X is a Boolean value, it reformats to "True" or "False". If X is a number, the second argument Y is optional and can either be "hex" (convert X to hexadecimal), "commas" (formats X with commas and 2 decimal places), or "duration"
+
+
+# Common Stats Functions
+
+Common statistical functions used with the `chart`, `stats`, and `timechart` commands. Field names can be wildcarded, so `avg(*delay)` might calculate the average of the `delay` and `xdelay` fields.
+
+## Statistical Functions
+
+- **`avg(X)`**  
+  Returns the average of the values of field `X`.
+
+- **`count(X)`**  
+  Returns the number of occurrences of the field `X`. To indicate a specific field value to match, format `X` as `eval(field="value")`.
+
+- **`dc(X)`**  
+  Returns the count of distinct values of the field `X`.
+
+- **`earliest(X)`**  
+  Returns the chronologically earliest seen value of `X`.
+
+- **`latest(X)`**  
+  Returns the chronologically latest seen value of `X`.
+
+- **`max(X)`**  
+  Returns the maximum value of the field `X`. If the values of `X` are non-numeric, the max is found from alphabetical ordering.
+
+- **`median(X)`**  
+  Returns the middle-most value of the field `X`.
+
+- **`min(X)`**  
+  Returns the minimum value of the field `X`. If the values of `X` are non-numeric, the min is found from alphabetical ordering.
+
+- **`mode(X)`**  
+  Returns the most frequent value of the field `X`.
+
+- **`perc<X>(Y)`**  
+  Returns the X-th percentile value of the field `Y`. For example, `perc5(total)` returns the 5th percentile value of a field "total".
+
+- **`range(X)`**  
+  Returns the difference between the max and min values of the field `X`.
+
+- **`stdev(X)`**  
+  Returns the sample standard deviation of the field `X`.
+
+- **`stdevp(X)`**  
+  Returns the population standard deviation of the field `X`.
+
+- **`sum(X)`**  
+  Returns the sum of the values of the field `X`.
+
+- **`sumsq(X)`**  
+  Returns the sum of the squares of the values of the field `X`.
+
+- **`values(X)`**  
+  Returns the list of all distinct values of the field `X` as a multi-value entry. The order of the values is alphabetical.
+
+- **`var(X)`**  
+  Returns the sample variance of the field `X`.
+
+## Search Examples
+
+- **Filter Results**  
+  Returns `X` rounded to the amount of decimal places specified by `Y`. The default is to round to an integer.  
+  Example: `round(3.5)`
+
+- **Trim Right Characters**  
+  Returns `X` with the characters in `Y` trimmed from the right side. If `Y` is not specified, spaces and tabs are trimmed.  
+  Example: `rtrim(" ZZZZabcZZ ", " Z")`
+
+- **Split Field**  
+  Returns `X` as a multi-valued field, split by delimiter `Y`.  
+  Example: `split(address, ";")`
