@@ -113,13 +113,13 @@ index=games sourcetype="SimCubeBeta" | top host | fields - percent
 ```
 
 
-`Pipeline
- The first intermediate results table shows events retrieved from the index that matched the
-search terms "sourcetype=SimCubeBeta."
-● The second intermediate results table shows the results of the top command, "top host,"
-summarizing the events into a list of the top 10 users, the user count, and percentage.
-● The "fields - percent" removes the column that shows the percentage; therefore, you are
-left with a smaller final results table`
+## Pipelining
+The first intermediate results table shows events retrieved from the index that matched the
+search terms `sourcetype=SimCubeBeta.`
+The second intermediate results table shows the results of the `top` command, "top host,"
+summarizing the events into a list of the top 10 users, the user count, and percentage.`
+The "fields - percent" removes the column that shows the percentage; therefore, you are
+left with a smaller final results table
 
 
 It involves chaining together multiple commands using the pipe symbol (|) to pass
