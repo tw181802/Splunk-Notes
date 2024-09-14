@@ -109,6 +109,24 @@ Saving a search, whether as a report, alert, or dashboard, preserves and shares 
 - XML
 - JSON
 
+## Visualizzations can be saved in these 3 content types:
+`Column Chart` and `Statistic Table`
+`Column Chart`
+`Statistic Table`
+
+## Lookups
+There are four types of lookups:
+`CSV (comma-separated values) lookups`.
+`External lookups`.
+`KV Store (app key value store) lookups`.
+`Geospatial lookups`.
+`lookup:` Use to add fields to the events in the results of the search.
+`inputlookup:` Use to search the contents of a lookup table.
+`outputlookup:` Use to write fields in search results to a static lookup table file or KV store collection that you specify. 
+
+
+## Alerts
+There are two alert types: `scheduled` and `real-time.` 
 
 ## Event Viewer
 Display option `List`, `Raw` and `Table`
