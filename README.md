@@ -49,21 +49,11 @@ The search head is a component of Splunk that enables users to search and analyz
 ### Forwarder
 The forwarder is a component of Splunk responsible for collecting and forwarding data from various sources to the Splunk indexers. Universal = `lightweight` , Heavy = `Full`
 
-## Field Removal
 
-
-- `-<field>`: Removes all of the fields.
-<img width="955" alt="1" src="https://github.com/user-attachments/assets/65199e63-c554-4199-8409-6cb9f37e65df">
-
-- `- <field>`: Removes a particular field.
-<img width="954" alt="2" src="https://github.com/user-attachments/assets/e2e6cda2-9714-481b-9e52-db4b2170fba1">
 
 ## Key Concepts
 
 <img width="960" alt="general" src="https://github.com/user-attachments/assets/f66756ee-fe05-469b-a902-b51fc1519f1a">
-
-
-
 
 
 
@@ -109,7 +99,7 @@ Saving a search, whether as a report, alert, or dashboard, preserves and shares 
 - XML
 - JSON
 
-## Visualizzations can be saved in these 3 content types:
+## Visualizations can be saved in these 3 content types:
 `Column Chart` and `Statistic Table`
 `Column Chart`
 `Statistic Table`
@@ -165,6 +155,16 @@ Fields are searchable name/value pairings in event data. They represent key/valu
 - `punct`
 - `splunk_server`
 - `timestamp`
+
+## Field Removal
+
+- `-<field>`: Removes all of the fields.
+<img width="955" alt="1" src="https://github.com/user-attachments/assets/65199e63-c554-4199-8409-6cb9f37e65df">
+
+- `- <field>`: Removes a particular field.
+<img width="954" alt="2" src="https://github.com/user-attachments/assets/e2e6cda2-9714-481b-9e52-db4b2170fba1">
+
+
 
 ## Pipeline
 The search pipeline involves chaining commands using the pipe symbol (`|`) to pass results from one command to the next. For example:
