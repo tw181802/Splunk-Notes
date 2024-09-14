@@ -4,28 +4,50 @@
 
 Splunk is an event management system (SIEM) that helps you make sense of large amounts of data, find problems, and understand what’s happening in your digital environment. This gives better view over the network, ability to hunt for threats, and respond to incidents. 
 
+## Adding data
+
+
+![Screenshot 2024-09-14 at 4 03 57 PM](https://github.com/user-attachments/assets/a125df1b-e486-4bab-a06d-c165c1a0d6fa)
+
+
+
+
+
 
 ## Key Concepts
 
 ### Sourcetype
-It is a key piece of information used by Splunk to parse and extract fields from the raw data and apply appropriate data models, tags, and other settings.  This data can consist of Windows Event logs, Sysmon  Logs, Fortinet Firewall Log, Suricata logs, etc. When data is ingested into Splunk, it is assigned a sourcetype based on its source and format, such as:
+It is a key piece of information (metadata field) used by Splunk to parse and extract fields from the raw data and apply appropriate data models, tags, and other settings.  This data can consist of Windows Event logs, Sysmon  Logs, Fortinet Firewall Log, Suricata logs, etc. When data is ingested into Splunk, it is assigned a sourcetype based on its source and format, such as:
 - `access_combined` for Apache logs
 - `syslog` for system logs
 - `JSON` for structured data
 
+### Splunk Main Functions:
+
+
+1.Index
+2.Search and Investigate
+3.Add Knowledge
+4.Monitor and Alert
+5.Report and Analyze
+
 ### Indexing 
 When data is added to Splunk, it is first indexed. This involves breaking it into individual events, parsing out relevant fields, and assigning timestamps and other metadata. The Splunk indexing engine uses a multi-step process:
+
 1. Breaking the data into events.
 2. Parsing the events to extract fields.
 3. Normalizing the fields into a common format.
 4. Storing the normalized events in an index.
+
+NOTE: Bucketing manages index file
+
 ## Components
 
 ### Search Head
-The search head is a component of Splunk that enables users to search and analyze data in real time. When a user initiates a search query, it is sent to the search head, which then distributes the search to one or more indexers. This is the User Interface (UI)
+The search head is a component of Splunk that enables users to search and analyze data in real time. When a user initiates a search query, it is sent to the search head, which then distributes the search to one or more indexers. This is the User Interface (UI) Some functions include SPL, Real-time searching, visualization and correlation.
 
 ### Forwarder
-The forwarder is a component of Splunk responsible for collecting and forwarding data from various sources to the Splunk indexers.
+The forwarder is a component of Splunk responsible for collecting and forwarding data from various sources to the Splunk indexers. Universal = lightweight , heavy = full
 
 ## Field Removal
 
@@ -86,7 +108,21 @@ Saving a search, whether as a report, alert, or dashboard, preserves and shares 
 - CSV
 - XML
 - JSON
-- 
+
+
+## Event Viewer
+Display option `List`, `Raw` and `Table`
+List has `3` columns `/`  `Time` and `Event`
+
+## Splunk Apps
+Built and Certified are by Splunk ; can dowload in Splunk or at `Spunkbase.com`
+Stored - `C:\Program Files\Splunk\etc\apps\[app name] folder`
+
+## Deployment Types
+`Standaline`, `Distributed` and `Cloud`
+
+## Custom Knowledge
+`Custom fields`, `Tags`, `Lookups`
 
 
 ## Machine Data
@@ -115,6 +151,24 @@ The search pipeline involves chaining commands using the pipe symbol (`|`) to pa
 ```spl
 index=games sourcetype="SimCubeBeta" | top host | fields - percent
 ```
+
+## Timeline
+Time range is specified with `Time Range Picker`
+
+For `exact time ranges`, the syntax for the time modifiers is `%m/%d/%Y:%H:%M:%S.` 
+ex. `earliest=04/19/2023:00:00:00 latest=04/27/2023:00:00:00`
+Search can be `absolute` or `relative` . 
+Absolute is specific time and dates
+Relative is depending on when search is ran
+Current time = `now`
+Set start with `earliest=` and set end with `latest=` 
+Separate the time amount from the snap to time unit with an `"@"` character.
+
+
+## Control Job Search
+`Edit`, `Send`, `Inspect` and `Delete`
+Default lifetime is `10 minutes` can extend to `7 days`
+
 
 
 ## Pipelining
